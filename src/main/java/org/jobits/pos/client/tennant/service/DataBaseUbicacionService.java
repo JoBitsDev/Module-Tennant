@@ -6,13 +6,11 @@
 package org.jobits.pos.client.tennant.service;
 
 import com.root101.clean.core.app.usecase.AbstractUseCaseImpl;
-import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import org.jobits.db.core.domain.ConexionPropertiesWrapperModel;
 import org.jobits.db.core.usecase.UbicacionConexionService;
-import org.jobits.pos.client.tennant.core.domain.BaseDatos;
 
 /**
  *

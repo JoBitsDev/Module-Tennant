@@ -6,16 +6,13 @@
 package org.jobits.pos.client.tennant.core.usecase.impl;
 
 import com.root101.clean.core.app.usecase.DefaultCRUDUseCase;
-import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
-import java.util.List;
 import org.jobits.pos.client.tennant.core.domain.BaseDatos;
 import org.jobits.pos.client.tennant.core.domain.Token;
 import org.jobits.pos.client.tennant.core.module.TennantCoreModule;
 import org.jobits.pos.client.tennant.core.repo.BaseDatosRepo;
 import org.jobits.pos.client.tennant.core.usecase.BaseDatosUseCase;
 import org.jobits.pos.client.tennant.core.usecase.TokenUseCase;
-import org.jobits.pos.client.tennant.repo.module.TennantRepoModule;
 
 public class BaseDatosUseCaseImpl extends DefaultCRUDUseCase<BaseDatos>
         implements BaseDatosUseCase {

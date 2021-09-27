@@ -8,7 +8,6 @@ module org.jobits.pos.tennant {
     requires com.google.guice;
     requires com.fasterxml.jackson.databind;
     requires java.logging;
-    requires java.desktop;
     requires com.root101clean.core;
     requires org.jobits.db;
 
