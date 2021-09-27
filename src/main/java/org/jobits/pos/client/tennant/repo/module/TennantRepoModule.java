@@ -12,6 +12,9 @@ import com.root101.clean.core.app.modules.DefaultAbstractModule;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.exceptions.AlreadyInitModule;
 import com.root101.clean.core.exceptions.NotInitModule;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jobits.db.core.module.DataVersionControlModule;
 import org.jobits.db.core.usecase.UbicacionConexionHandler;
 import org.jobits.db.pool.ConnectionPoolHandler;
@@ -86,7 +89,12 @@ public class TennantRepoModule extends DefaultAbstractModule {
     }
 
     private void registerResources() {
-        ResourceHandler.registerInternal("tennant_module");
+        try {
+            ResourceHandler.registerExternal("/tennant_module");
+        } catch (Exception ex) {
+            ResourceHandler.registerInternal("tennant_module");
+            Logger.getLogger(TennantRepoModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
