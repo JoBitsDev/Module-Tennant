@@ -7,7 +7,6 @@ package org.jobits.pos.client.tennant.service;
 
 import com.root101.clean.core.domain.services.ResourceHandler;
 import org.jobits.pos.client.tennant.core.domain.BaseDatos;
-import org.jobits.pos.client.tennant.core.domain.Cuenta;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -23,7 +22,7 @@ import org.jobits.db.pool.ConnectionPoolService;
  * @author Jorge
  *
  */
-public class DatabaseRepository implements ConnectionPoolService {
+public class DatabasePoolRepository implements ConnectionPoolService {
 
     private static final String PU_DEFAULT_NAME = "pasarela_loggeo";
     private static final HashMap<String, String> PU_DEFAULT_PROPERTIES = getDefaultProperties();
@@ -40,7 +39,13 @@ public class DatabaseRepository implements ConnectionPoolService {
 
     @Override
     public EntityManager getCurrentConnection() {
-        if (currentConnection ==null) {
+        if (currentConnection == null) {
+            currentConnection = getEMF().createEntityManager();
+        }
+        if (!currentConnection.isOpen()) {
+            currentConnection = getEMF().createEntityManager();
+        } else {
+            getEMF().getCache().evictAll();
             currentConnection = getEMF().createEntityManager();
         }
         return currentConnection;

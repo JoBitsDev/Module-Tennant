@@ -21,7 +21,7 @@ import org.jobits.db.pool.ConnectionPoolHandler;
 import org.jobits.db.versioncontrol.DataVersionControlHandler;
 import org.jobits.db.versioncontrol.DataVersionControlService;
 import org.jobits.pos.client.tennant.service.DataBaseUbicacionService;
-import org.jobits.pos.client.tennant.service.DatabaseRepository;
+import org.jobits.pos.client.tennant.service.DatabasePoolRepository;
 
 /**
  *
@@ -78,7 +78,7 @@ public class TennantRepoModule extends DefaultAbstractModule {
         DataVersionControlModule.init();
         String schema = ResourceHandler.getString("com.jobits.pos.tennant.repo.db.shema");
         String dir = "org/jobits/pos/tennant/sql";
-        ConnectionPoolHandler.registerConnectionPoolService(getModuleName(), new DatabaseRepository());
+        ConnectionPoolHandler.registerConnectionPoolService(getModuleName(), new DatabasePoolRepository());
         DataVersionControlHandler.registerDataVersionControlService(DataVersionControlService.from(MODULE_NAME, dir, schema));
         UbicacionConexionHandler.registerUbicacionConexionService(DataBaseUbicacionService.getInstance());
     }
