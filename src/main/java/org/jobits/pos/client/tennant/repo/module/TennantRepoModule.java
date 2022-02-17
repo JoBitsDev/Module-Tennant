@@ -13,6 +13,7 @@ import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.exceptions.AlreadyInitModule;
 import com.root101.clean.core.exceptions.NotInitModule;
 import java.net.MalformedURLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jobits.db.core.module.DataVersionControlModule;
@@ -89,10 +90,10 @@ public class TennantRepoModule extends DefaultAbstractModule {
     }
 
     private void registerResources() {
+        ResourceHandler.registerInternal("tennant_module");
         try {
-            ResourceHandler.registerExternal("/tennant_module");
+            ResourceHandler.registerExternal("tennant_def_conn_props");//TODO: default Create
         } catch (Exception ex) {
-            ResourceHandler.registerInternal("tennant_module");
             Logger.getLogger(TennantRepoModule.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
