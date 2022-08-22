@@ -6,28 +6,27 @@
 package org.jobits.pos.client.tennant.service;
 
 import com.root101.clean.core.app.usecase.AbstractUseCaseImpl;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import org.jobits.db.core.domain.ConexionPropertiesWrapperModel;
 import org.jobits.db.core.usecase.UbicacionConexionService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class DataBaseUbicacionService extends AbstractUseCaseImpl implements UbicacionConexionService {
 
     private static DataBaseUbicacionService INSTANCE = new DataBaseUbicacionService();
 
-    public static DataBaseUbicacionService getInstance() {
-        return INSTANCE;
+    private DataBaseUbicacionService() {
     }
 
-    private DataBaseUbicacionService() {
+    public static DataBaseUbicacionService getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -37,7 +36,10 @@ public class DataBaseUbicacionService extends AbstractUseCaseImpl implements Ubi
 
     @Override
     public void setSelectedConexion(ConexionPropertiesModel cpm) {
+        var old = ConexionWrapper.INSTANCE.getUbicacionActiva();
         ConexionWrapper.INSTANCE.setSelectedUbicacion(cpm);
+        firePropertyChange(PROP_LOCATION_CHANGED, old, cpm);
+
     }
     
     @Override
