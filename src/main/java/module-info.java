@@ -10,5 +10,6 @@ module org.jobits.pos.tennant {
     requires java.logging;
     requires com.root101clean.core;
     requires org.jobits.db;
+    requires java.persistence;
 
 }
