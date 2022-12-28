@@ -6,21 +6,21 @@
 package org.jobits.pos.client.tennant.service;
 
 import com.root101.clean.core.domain.services.ResourceHandler;
-import org.jobits.pos.client.tennant.core.domain.BaseDatos;
-import java.util.HashMap;
-import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.pool.ConnectionPoolService;
+import org.jobits.pos.client.tennant.core.domain.BaseDatos;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * FirstDream
  *
  * @author Jorge
- *
  */
 public class DatabasePoolRepository implements ConnectionPoolService {
 
@@ -28,52 +28,6 @@ public class DatabasePoolRepository implements ConnectionPoolService {
     private static final HashMap<String, String> PU_DEFAULT_PROPERTIES = getDefaultProperties();
     private static EntityManagerFactory DEFAULT_EMF;
     private EntityManager currentConnection;
-
-    @Override
-    public EntityManagerFactory getEMF() {
-        if (DEFAULT_EMF == null) {
-            DEFAULT_EMF = Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, PU_DEFAULT_PROPERTIES);
-        }
-        return DEFAULT_EMF;
-    }
-
-    @Override
-    public EntityManager getCurrentConnection() {
-        if (currentConnection == null) {
-            currentConnection = getEMF().createEntityManager();
-        }
-        if (!currentConnection.isOpen()) {
-            currentConnection = getEMF().createEntityManager();
-        } else {
-            getEMF().getCache().evictAll();
-            currentConnection = getEMF().createEntityManager();
-        }
-        return currentConnection;
-    }
-
-    @Override
-    public ConexionPropertiesModel getCurrentUbicacion() {
-        return getDefautlUbicacion();
-    }
-
-    @Override
-    public EntityManagerFactory getEmfFrom(ConexionPropertiesModel connectionsProperties) {
-        return getEMF();
-    }
-
-    @Override
-    public boolean isConnected() {
-        return true;
-    }
-
-    @Override
-    public void resetConnection() {
-        if (currentConnection != null) {
-            getEMF().getCache().evictAll();
-            currentConnection.close();
-            currentConnection = null;
-        }
-    }
 
     public static EntityManagerFactory getFactoryFrom(BaseDatos cuenta) {
         return Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, getPropertiesFrom(cuenta));
@@ -130,6 +84,53 @@ public class DatabasePoolRepository implements ConnectionPoolService {
                 return PU_DEFAULT_PROPERTIES.get(PersistenceProperties.USER.getName());
             }
         };
+    }
+
+    @Override
+    public EntityManagerFactory getEMF() {
+        if (DEFAULT_EMF == null) {
+            DEFAULT_EMF = Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, PU_DEFAULT_PROPERTIES);
+        }
+        return DEFAULT_EMF;
+    }
+
+    @Override
+    public EntityManager getCurrentConnection() {
+        if (currentConnection == null) {
+            currentConnection = getEMF().createEntityManager();
+        }
+        if (currentConnection.isOpen()) {
+            if (!currentConnection.getTransaction().isActive())
+                currentConnection = getEMF().createEntityManager();
+        } else {
+            //  getEMF().getCache().evictAll();
+            currentConnection = getEMF().createEntityManager();
+        }
+        return currentConnection;
+    }
+
+    @Override
+    public ConexionPropertiesModel getCurrentUbicacion() {
+        return getDefautlUbicacion();
+    }
+
+    @Override
+    public EntityManagerFactory getEmfFrom(ConexionPropertiesModel connectionsProperties) {
+        return getEMF();
+    }
+
+    @Override
+    public boolean isConnected() {
+        return true;
+    }
+
+    @Override
+    public void resetConnection() {
+        if (currentConnection != null) {
+            getEMF().getCache().evictAll();
+            currentConnection.close();
+            currentConnection = null;
+        }
     }
 
 }
