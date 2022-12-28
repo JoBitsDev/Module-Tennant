@@ -4,8 +4,8 @@ description = 'JoBits POS:Tennant'
 
 dependencies {
     implementation 'com.root101.clean:com.root101.clean.core:2.1.6'
-    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.10'
-    
+    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.11'
+
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params
@@ -15,13 +15,13 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.inject/guice
     implementation group: 'com.google.inject', name: 'guice', version: '4.2.3'
-    
+
     //JDBC
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
-    
+
     // https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa
     implementation group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
-    
+
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.2'
 
